@@ -26,3 +26,8 @@ class Amg2023(BuiltinAmg2023):
 
         cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-L{0}".format(sst_elements_lib))
         return cmake_options
+
+    def setup_run_environment(self, env):
+        sst_elements_lib = Path(self.spec['sst-elements'].prefix) / 'lib' / 'sst-elements-library'
+        env.prepend_path('LD_LIBRARY_PATH', sst_elements_lib)
+
