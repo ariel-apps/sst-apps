@@ -42,6 +42,4 @@ class ArielApps(BundlePackage):
     depends_on("branson@develop+ariel")
     depends_on("lammps@develop+ariel")
     depends_on("babelstream@main+omp+ariel")
-
-    #TODO - work on HPCG package
-    #depends_on("hpcg@develop+openmp")
+    depends_on("hpcg@develop+openmp+ariel")
