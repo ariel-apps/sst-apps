@@ -49,18 +49,69 @@ use the bundle package to load them all onto your `PATH`.
 $ spack load ariel-apps
 $ which amg
 ~/spack/opt/spack/linux-rocky8-skylake_avx512/gcc-12.2.0/amg2023-develop-zslus327ekd7hrr57jls4sirsklyauiz/bin/amg
-```
 
+
+```
 Use `spack unload` to undo this.
 
+### Sanity check
+The Ariel benchmarks, when using the Pin frontend (the only supported frontend for now)
+can run natively. You can run them and you should see output from
+`libarielapi`.
+```bash
+$ amg
+notifying fesimple
+Running with these driver parameters:
+  Problem ID    = 1
 
-## Notes
-- All packages in this repo are derived from packages in the base repo, referred to as `builtin.`, with one execption, `HPCG`. We were unable to override the environment variables in our dervied packge so we were forced to copy the entire file to make changes. Otherwise, we tried to change as little as possible.
-- Currently, the packages require the `develop` branch of sst-elements. Once SST 15.0 is released, we can pin to that version.
-- The packages also require the `develop` branches of the code they are
+[... output omitted ...]
+
+FOM_Setup: nnz_AP / Setup Phase Time: 1.669530e+07
+
+ARIEL: Request to print statistics.
+ARIEL: ENABLE called in Ariel API.
+ARIEL: Request to print statistics.
+ARIEL: DISABLE called in Ariel API.
+=============================================
+Problem 1: AMG-GMRES Solve Time:
+=============================================
+GMRES Solve:
+  wall clock time = 0.002090 seconds
+
+[... output omitted ...]
+
+Figure of Merit (FOM): nnz_AP / (Setup Phase Time + Solve Phase Time) 1.010854e+07
+
+```
+The lines beginning with `ARIEL` as well as `notifying fesimple` come from the Ariel library.
+
+## Running SST
+Now we are finally ready to run an Ariel simulation in SST! You will notice that `sst-core` and `sst-elements`
+were installed as dependencies of our benchmarks. This is because they need `libarielapi`, built as
+part of `sst-elements`, to get the best experience when running them in Ariel. Furthermore,
+we build sst-elements with an optional flag, ``--enable-ariel-mpi`` which allows Ariel
+to work with MPI applications.
+
+So since you already have them installed, you can use spack to load them. Then you'll just need
+an SST input file. This repo happens to include one which is used for testing.
+```bash
+spack load sst-elements
+spack load amg2023
+sst sst-spack/shared_files/test-ariel.py -- $(which amg)
+
+-> WARNING: THIS LAST STEP CURRENTLY BROKEN AS THE ARIEL FRONTEND DOES NOT
+KNOW WHERE TO FIND THE `mpilauncher` UTILITY. FIX COMING ASAP.
+```
 
 ## TODOs
+- [ ] Fix `mpilauncher` error
 - [ ] Once SST 15.0 is released, change the dependencies in the packages to that, instead of `develop`.
 - [ ] Create releases for all of the forked benchmarks.
 - [ ] Document where to find the Branson and LAMMPS input decks.
 - [ ] Check that `spack load` has the right behavior when ~ariel is set.
+- [ ] [PEBIL](https://github.com/epanalytics/PEBIL) frontend support
+- [ ] Vanadis cross-compilation support
+- [ ] Mercury support
+
+## Notes
+- All packages in this repo are derived from packages in the base repo, referred to as `builtin`, with one execption, `HPCG`. We were unable to override the environment variables in our dervied packge so we were forced to copy the entire file to make changes. Otherwise, we tried to change as little as possible.
