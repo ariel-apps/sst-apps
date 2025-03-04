@@ -55,7 +55,7 @@ $ which amg
 Use `spack unload` to undo this.
 
 ### Sanity check
-The Ariel benchmarks, when using the Pin frontend (the only supported frontend for now)
+The Ariel benchmarks, when using the Pin frontend (the only supported frontend for now),
 can run natively. You can run them and you should see output from
 `libarielapi`.
 ```bash
