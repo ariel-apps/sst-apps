@@ -22,7 +22,7 @@ The following benchmarks are included:
 
 ## Installing Benchmarks
 After adding the repo it will be at the start of Spack's search path.
-You can now install any of the supported benchmarks using `spack install`..
+You can now install any of the supported benchmarks using `spack install`.
 To see a list of included benchmarks, use the `spack list` command
 ```bash
 $ spack list -r sst-spack
@@ -95,9 +95,9 @@ to work with MPI applications.
 So since you already have them installed, you can use spack to load them. Then you'll just need
 an SST input file. This repo happens to include one which is used for testing.
 ```bash
-spack load sst-elements
-spack load amg2023
-sst sst-spack/shared_files/test-ariel.py -- $(which amg)
+$ spack load sst-elements
+$ spack load amg2023
+$ sst sst-spack/shared_files/test-ariel.py -- $(which amg)
 
 -> WARNING: THIS LAST STEP CURRENTLY BROKEN AS THE ARIEL FRONTEND DOES NOT
 KNOW WHERE TO FIND THE `mpilauncher` UTILITY. FIX COMING ASAP.
@@ -112,6 +112,7 @@ KNOW WHERE TO FIND THE `mpilauncher` UTILITY. FIX COMING ASAP.
 - [ ] [PEBIL](https://github.com/epanalytics/PEBIL) frontend support
 - [ ] Vanadis cross-compilation support
 - [ ] Mercury support
+- [ ] Create base package type, ArielApp, that the packages can inherit from to reduce code duplication
 
 ## Notes
 - All packages in this repo are derived from packages in the base repo, referred to as `builtin`, with one execption, `HPCG`. We were unable to override the environment variables in our dervied packge so we were forced to copy the entire file to make changes. Otherwise, we tried to change as little as possible.
