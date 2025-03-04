@@ -105,6 +105,7 @@ KNOW WHERE TO FIND THE `mpilauncher` UTILITY. FIX COMING ASAP.
 
 ## TODOs
 - [ ] Fix `mpilauncher` error
+- [ ] Add tests once above is fixed
 - [ ] Once SST 15.0 is released, change the dependencies in the packages to that, instead of `develop`.
 - [ ] Create releases for all of the forked benchmarks.
 - [ ] Document where to find the Branson and LAMMPS input decks.
