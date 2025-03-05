@@ -8,11 +8,12 @@ parser = argparse.ArgumentParser(
     prog=f'sst [sst-args] test-ariel.py --',
     description='Used for testing Ariel\'s MPI features')
 
-parser.add_argument('prog', help='Path to the binary and any arguments, enclosed in quotes')
+parser.add_argument('exe', help='Path to the binary and any arguments, enclosed in quotes')
 parser.add_argument('-r', dest='ranks', default=1, help='How many ranks of the traced program to run.')
 parser.add_argument('-a', dest='tracerank', default=0, help='Which of the MPI ranks will be traced.')
 parser.add_argument('-t', dest='threads', default=1, help='The number of OpenMP threads to use per rank.')
 parser.add_argument('-o', dest='outfile', default='stats.csv', help='File used for stats output.')
+parser.add_argument('exe_args', nargs=argparse.REMAINDER, help='Additional options for the binary')
 
 args = parser.parse_args()
 
@@ -20,8 +21,8 @@ ncores    = int(args.threads)
 mpiranks  = int(args.ranks)
 tracerank = int(args.tracerank)
 
-exe      = args.prog.split(" ")[0]
-exe_args = args.prog.split(" ")[1:]
+exe      = args.exe
+exe_args = args.exe_args
 
 if not pathlib.Path(exe).exists():
     raise FileNotFoundError(f"Executable {exe} not found.")

@@ -54,7 +54,7 @@ class Amg2023(BuiltinAmg2023):
         if self.spec.satisfies("~ariel"):
             raise SkipTest("Test only available if compiled with Ariel API support")
 
-        # Don't need file open...
+        # Pick a name for the output file
         outfile = tempfile.NamedTemporaryFile(
             dir=self.test_suite.stage,
             suffix=".csv",
