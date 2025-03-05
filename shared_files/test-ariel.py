@@ -12,6 +12,7 @@ parser.add_argument('prog', help='Path to the binary and any arguments, enclosed
 parser.add_argument('-r', dest='ranks', default=1, help='How many ranks of the traced program to run.')
 parser.add_argument('-a', dest='tracerank', default=0, help='Which of the MPI ranks will be traced.')
 parser.add_argument('-t', dest='threads', default=1, help='The number of OpenMP threads to use per rank.')
+parser.add_argument('-o', dest='outfile', default='stats.csv', help='File used for stats output.')
 
 args = parser.parse_args()
 
@@ -105,7 +106,8 @@ bus_mem.connect( (bus, "lowlink0", "100ps"), (memctrl, "highlink", "100ps") )
 ## Define SST core options
 #########################################################################
 sst.setProgramOption("stop-at", "200ms")
-sst.setStatisticOutput("sst.statoutputtxt")
-sst.setStatisticOutputOptions( { "filepath"  : "stats.csv" })
+sst.setStatisticOutput("sst.statoutputcsv")
+sst.setStatisticOutputOptions( { "filepath":args.outfile, "separator":"," })
 sst.setStatisticLoadLevel(5)
-sst.enableAllStatisticsForAllComponents()
+sst.enableStatisticForComponentName("memory", "requests_received_GetS")
+#sst.enableAllStatisticsForAllComponents()
