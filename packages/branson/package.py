@@ -79,7 +79,7 @@ class Branson(BuiltinBranson):
         repo_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) # hacky, I know
         sdl = os.path.join(repo_dir, 'shared_files', 'test-ariel.py')
 
-        out = prog(sdl, "--", "-o", outfile_name, str(exe), input_file, output=str.split, error=str.split)
+        out = prog(sdl, "--", "-o", outfile_name, str(exe), "--exe_args", input_file, output=str.split, error=str.split)
         # Open the file and read the third line, which should have a non-zero
         # value in the seventh column
         with open(outfile_name) as of:
