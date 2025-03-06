@@ -13,7 +13,7 @@ parser.add_argument('-r', dest='ranks', default=1, help='How many ranks of the t
 parser.add_argument('-a', dest='tracerank', default=0, help='Which of the MPI ranks will be traced.')
 parser.add_argument('-t', dest='threads', default=1, help='The number of OpenMP threads to use per rank.')
 parser.add_argument('-o', dest='outfile', default='stats.csv', help='File used for stats output.')
-parser.add_argument('exe_args', nargs=argparse.REMAINDER, help='Additional options for the binary')
+parser.add_argument('exe_args', nargs='*', help='Additional options for the binary')
 
 args = parser.parse_args()
 
