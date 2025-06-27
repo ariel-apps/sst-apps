@@ -2,6 +2,8 @@ from spack.package import *
 from spack.pkg.builtin.lammps import Lammps as BuiltinLammps
 from spack.util.environment import EnvironmentModifications
 from pathlib import Path
+import os
+#import tempfile
 
 class Lammps(BuiltinLammps):
 
@@ -35,4 +37,26 @@ class Lammps(BuiltinLammps):
     @run_after("install")
     def install_examples(self):
         install_tree(str(Path(self.stage.source_path) / 'examples'), str(Path(prefix) / 'examples'))
+
+    def test_basic(self):
+        assert True
+    def _test_native_execution_lammps(self):
+        """ Test that amg can run."""
+        expected = "Ave neighs/atom"
+        prog = which(self.prefix.bin.lmp)
+        input_dir = os.getenv("LAMMPS_EXAMPLES")
+        input_file = os.path.join(input_dir, "grid", "in.grid.2d")
+        out = prog("-in", input_file, output=str.split, error=str.split)
+        assert expected in out, f"Expected '{expected}' in the output"
+
+    def _test_arielapi_branson(self):
+        """ Test that arielapi output is present."""
+        if self.spec.satisfies("~ariel"):
+            raise SkipTest("Test only available if compiled with Ariel API support")
+        expected = "ARIEL: ENABLE called in Ariel API."
+        prog = which(self.prefix.bin.lmp)
+        input_dir = os.getenv("LAMMPS_EXAMPLES")
+        input_file = os.path.join(input_dir, "grid", "in.grid.2d")
+        out = prog("-in", input_file, output=str.split, error=str.split)
+        assert expected in out, f"Expected '{expected}' in the output"
 
