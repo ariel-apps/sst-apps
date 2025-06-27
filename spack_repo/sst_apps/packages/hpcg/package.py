@@ -1,5 +1,6 @@
+from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
 from spack.package import *
-from spack.pkg.builtin.hpcg import Hpcg as BuiltinHpcg
+from spack_repo.builtin.packages.hpcg.package import Hpcg as BuiltinHpcg
 from spack.util.environment import EnvironmentModifications
 from pathlib import Path
 import os

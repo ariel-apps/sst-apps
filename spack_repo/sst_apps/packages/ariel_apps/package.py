@@ -19,6 +19,7 @@
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
 
+from spack_repo.builtin.build_systems.bundle import BundlePackage
 from spack.package import *
 
 

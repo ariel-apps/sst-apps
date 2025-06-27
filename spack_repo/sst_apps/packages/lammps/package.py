@@ -1,5 +1,5 @@
 from spack.package import *
-from spack.pkg.builtin.lammps import Lammps as BuiltinLammps
+from spack_repo.builtin.packages.lammps.package import Lammps as BuiltinLammps
 from spack.util.environment import EnvironmentModifications
 from pathlib import Path
 

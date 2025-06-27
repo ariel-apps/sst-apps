@@ -1,5 +1,5 @@
 from spack.package import *
-from spack.pkg.builtin.branson import Branson as BuiltinBranson
+from spack_repo.builtin.packages.branson.package import Branson as BuiltinBranson
 from spack.util.environment import EnvironmentModifications
 from pathlib import Path
 import tempfile
